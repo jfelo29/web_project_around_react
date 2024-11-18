@@ -2,7 +2,7 @@ export default function Card(props) {
   const { name, link, isliked, handleOpenPopup } = props.card;
 
   return (
-    <div className="card">
+    <div className="card cards__list">
       <div className="card__delate-icon"></div>
       <img src={link} alt="card" className="card__image" />
       <div className="card__menu">
