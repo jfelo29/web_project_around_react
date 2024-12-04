@@ -1,6 +1,6 @@
 export default function Popup(props) {
   const { onClose, title, children } = props;
-  console.log(props);
+
   return (
     <div className="popup" id="popup-profile">
       <div className="popup__container">

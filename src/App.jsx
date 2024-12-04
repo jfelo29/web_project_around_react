@@ -1,18 +1,86 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import Header from "./components/Header/Header.jsx";
 import Main from "./components/Main/Main.jsx";
 import Footer from "./components/Footer/Footer.jsx";
 import "./index.css";
-
-function App() {
+import CurrentUserContext from "./contexts/currentUserContext.js";
+import api from "./utils/api";
+import EditProfile from "./components/form/EditProfile/EditProfile.jsx";
+import EditAvatar from "./components/form/EditAvatar/EditAvatar.jsx";
+function App(props) {
   const [count, setCount] = useState(0);
+  const [currentUser, setCurrentUser] = useState({});
+  const [popup, setPopup] = useState(null);
+  const editProfilePopup = {
+    title: "Editar perfil",
+    children: (
+      <EditProfile
+        handleUpdateUser={props.onHandleUpdateUser}
+        handleOpenPopupEditProfile={props.handleOpenPopupEditProfile}
+      />
+    ),
+  };
+  const editAvatarPopup = {
+    title: "Editar avatar",
+    children: <EditAvatar handleUpdateAvatar={handleUpdateAvatar} />,
+  };
 
+  useEffect(() => {
+    getUserInfo();
+  }, []);
+  function getUserInfo() {
+    api
+      .getUserInfo()
+      .then((data) => {
+        setCurrentUser(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+  function handleOpenPopupNewCard() {
+    setPopup(newCardPopup);
+  }
+  function handleOpenPopupEditProfile() {
+    setPopup(editProfilePopup);
+  }
+  function handleOpenPopupEditAvatar() {
+    setPopup(editAvatarPopup);
+  }
+  function handleClosePopup() {
+    setPopup(null);
+  }
+
+  async function handleUpdateUser(data) {
+    await api.editUser(data).then((newData) => {
+      /* props.setCurrentUser(newData);
+      handleClosePopup() */
+    });
+  }
+  async function handleUpdateAvatar(data) {
+    await api.profileImage(data).then((newData) => {
+      setCurrentUser(newData);
+    });
+  }
+  async function handleAddPlaceSubmit() {
+    await api.createcard(data).then((newData) => {});
+  }
   return (
-    <>
+    <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
         <Header />
-        <Main />
+        <Main
+          setCurrentUser={setCurrentUser}
+          onHandleUpdateUser={handleUpdateUser}
+          onHandleUpdateAvatar={handleUpdateAvatar}
+          handleOpenPopupEditAvatar={handleOpenPopupEditAvatar}
+          handleOpenPopupEditProfile={handleOpenPopupEditProfile}
+          handleOpenPopupNewCard={handleOpenPopupNewCard}
+          handleClosePopup={handleClosePopup}
+          handleAddPlaceSubmit={handleAddPlaceSubmit}
+          popup={popup}
+        />
         <Footer />
         {/*  <Popup>
           <EditAvatar />{" "}
@@ -31,20 +99,8 @@ function App() {
           </div>
         </template>
       </div>
-      {/*   <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p> */}
-    </>
+      {}
+    </CurrentUserContext.Provider>
   );
 }
-
 export default App;
