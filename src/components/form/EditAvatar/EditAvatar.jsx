@@ -1,5 +1,5 @@
 import { useState, useContext, useRef } from "react";
-import currentUserContext from "../../../contexts/currentUserContext.js";
+import currentUserContext from "../../../contexts/CurrentUserContext.js";
 
 export default function EditAvatar(props) {
   const currentUser = useContext(currentUserContext);

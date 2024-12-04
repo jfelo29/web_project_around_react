@@ -4,7 +4,7 @@ import Header from "./components/Header/Header.jsx";
 import Main from "./components/Main/Main.jsx";
 import Footer from "./components/Footer/Footer.jsx";
 import "./index.css";
-import CurrentUserContext from "./contexts/currentUserContext.js";
+import CurrentUserContext from "./contexts/CurrentUserContext.js";
 import api from "./utils/api";
 import EditProfile from "./components/form/EditProfile/EditProfile.jsx";
 import EditAvatar from "./components/form/EditAvatar/EditAvatar.jsx";

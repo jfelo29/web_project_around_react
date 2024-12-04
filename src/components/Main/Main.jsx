@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import Popup from "./popup/Popup";
 import Card from "./componets/Card/card";
 import api from "../../utils/api";
-import CurrentUserContext from "../../contexts/currentUserContext.js";
+import CurrentUserContext from "../../contexts/CurrentUserContext.js";
 export default function Main(props) {
   const [cards, setCard] = useState([]);
 
