@@ -8,7 +8,7 @@ import CurrentUserContext from "./contexts/CurrentUserContext.js";
 import api from "./utils/api";
 import EditProfile from "./components/form/EditProfile/EditProfile.jsx";
 import EditAvatar from "./components/form/EditAvatar/EditAvatar.jsx";
-function App(props) {
+function App() {
   const [count, setCount] = useState(0);
   const [currentUser, setCurrentUser] = useState({});
   const [popup, setPopup] = useState(null);
@@ -16,8 +16,8 @@ function App(props) {
     title: "Editar perfil",
     children: (
       <EditProfile
-        handleUpdateUser={props.onHandleUpdateUser}
-        handleOpenPopupEditProfile={props.handleOpenPopupEditProfile}
+        handleUpdateUser={handleUpdateUser}
+        handleOpenPopupEditProfile={handleOpenPopupEditProfile}
       />
     ),
   };
@@ -54,6 +54,7 @@ function App(props) {
 
   async function handleUpdateUser(data) {
     await api.editUser(data).then((newData) => {
+      setCurrentUser(newData);
       /* props.setCurrentUser(newData);
       handleClosePopup() */
     });

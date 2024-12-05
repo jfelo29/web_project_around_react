@@ -14,6 +14,7 @@ export default function EditProfile(props) {
   const handleSubmit = (event) => {
     event.preventDefault(); // Evita el comportamiento predeterminado del envío de formularios
     props.handleUpdateUser({ name, about: description }); // Actualiza la información del usuario
+    console.log(handleSubmit);
   };
 
   return (
@@ -23,8 +24,8 @@ export default function EditProfile(props) {
         placeholder="nombre"
         id="input-name"
         className="popup__item"
-        minlength="2"
-        maxlength="40"
+        minLength="2"
+        maxLength="40"
         required
         name="name"
         value={name}
@@ -37,8 +38,8 @@ export default function EditProfile(props) {
         placeholder="descripción"
         id="input-about"
         className="popup__item"
-        minlength="2"
-        maxlength="200"
+        minLength="2"
+        maxLength="200"
         required
         name="about"
         value={description}
