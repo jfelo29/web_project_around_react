@@ -14,7 +14,6 @@ export default function EditProfile(props) {
   const handleSubmit = (event) => {
     event.preventDefault(); // Evita el comportamiento predeterminado del envío de formularios
     props.handleUpdateUser({ name, about: description }); // Actualiza la información del usuario
-    console.log(handleSubmit);
   };
 
   return (

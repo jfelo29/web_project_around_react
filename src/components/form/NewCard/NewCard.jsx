@@ -1,9 +1,12 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+import CurrentUserContext from "../../../contexts/CurrentUserContext";
 export default function NewCard(props) {
   const [card, setCard] = useState();
-  function handleCreateCard(event) {
+
+  //const [link, setLink] = useState(currentUser.link);
+  function handleSubmit(event) {
     event.preventDefault();
-    props.onCardCreate(card);
+    props.onAddPlaceSubmit(card);
   }
   function handleNameChange(event) {
     setCard({ ...card, name: event.target.value });
@@ -18,9 +21,11 @@ export default function NewCard(props) {
         name="name"
         placeholder="title"
         id="input-card-title"
-        ClassName="popup__item"
-        minlength="2"
-        maxlength="40"
+        className="popup__item"
+        minLength="2"
+        maxLength="40"
+        required
+        value={card.name}
         onChange={(event) => handleNameChange(event)}
       />
       <span className="popup__input-error input-card-title-error"></span>
@@ -32,10 +37,11 @@ export default function NewCard(props) {
         id="input-card-link"
         className="popup__item"
         required
+        value={card.link}
         onChange={(event) => handleLinkChange(event)}
       />
       <span className="popup__input-error input-card-link-error"></span>
-      <button className="popup__submit" onClick={handleCreateCard}>
+      <button className="popup__submit" onClick={handleSubmit}>
         crear
       </button>
     </form>

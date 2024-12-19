@@ -7,8 +7,6 @@ import Card from "./componets/Card/card";
 import api from "../../utils/api";
 import CurrentUserContext from "../../contexts/CurrentUserContext.js";
 export default function Main(props) {
-  const [cards, setCard] = useState([]);
-
   const currentUser = useContext(CurrentUserContext);
 
   useEffect(() => {
@@ -16,7 +14,7 @@ export default function Main(props) {
       .getCards()
 
       .then((data) => {
-        setCard(data);
+        props.setCard(data);
       });
   }, []);
   async function handleCardLike(card) {
@@ -25,7 +23,7 @@ export default function Main(props) {
       await api
         .dislikeCard(card._id)
         .then((newCard) => {
-          setCard((state) =>
+          props.setCard((state) =>
             state.map((currentCard) =>
               currentCard._id === card._id ? newCard : currentCard
             )
@@ -37,7 +35,7 @@ export default function Main(props) {
         .likeCard(card._id)
         .then((newCard) => {
           console.log(newCard);
-          setCard((state) =>
+          props.setCard((state) =>
             state.map((currentCard) =>
               currentCard._id === card._id ? newCard : currentCard
             )
@@ -50,7 +48,7 @@ export default function Main(props) {
     await api
       .delateCard(card._id)
       .then((newCard) => {
-        setCard((state) =>
+        props.setCard((state) =>
           state.filter((currentCard) =>
             currentCard._id === card._id ? false : currentCard
           )
@@ -62,7 +60,7 @@ export default function Main(props) {
     await api
       .createcard(card)
       .then((newCard) => {
-        setCard((state) => [...state, newCard]);
+        props.setCard((state) => [...state, newCard]);
       })
       .catch((error) => console.error(error));
     handleClosePopup();
@@ -73,7 +71,7 @@ export default function Main(props) {
       <section className="profile">
         <div className="profile__conteiner">
           <img
-            src={currentUser.avatar}
+            src={currentUser?.avatar}
             alt="foto perfil"
             className="profile__image"
           />
@@ -110,7 +108,7 @@ export default function Main(props) {
       </section>
       <section className="element-list">
         <ul className="cards__list">
-          {cards.map((card) => (
+          {props.cards.map((card) => (
             <Card
               key={card._id}
               card={card}
