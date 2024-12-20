@@ -25,7 +25,7 @@ export default function NewCard(props) {
         minLength="2"
         maxLength="40"
         required
-        value={card.name}
+        //value={card.name}
         onChange={(event) => handleNameChange(event)}
       />
       <span className="popup__input-error input-card-title-error"></span>
@@ -37,7 +37,7 @@ export default function NewCard(props) {
         id="input-card-link"
         className="popup__item"
         required
-        value={card.link}
+        //value={card.link}
         onChange={(event) => handleLinkChange(event)}
       />
       <span className="popup__input-error input-card-link-error"></span>
